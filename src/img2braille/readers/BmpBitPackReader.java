@@ -90,7 +90,7 @@ public class BmpBitPackReader implements BitPackReader {
 
 					// New line if we've read last bits of last byte in a row.
 					boolean newLine = (currentPair == 3) && (currentByte == rowUsedBytes - 1);
-					rowStack.push(new BitPackReadResult(true, new BitPack(shift), newLine));
+					rowStack.push(new BitPackReadResult(new BitPack(shift), newLine));
 				}
 			}
 
