@@ -1,5 +1,5 @@
 package img2braille;
 
-public interface BitPackProvider {
+public interface BitPackReader {
 	public BitPackReadResult read();
 }

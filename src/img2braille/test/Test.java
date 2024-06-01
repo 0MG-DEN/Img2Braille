@@ -6,18 +6,18 @@ import java.io.IOException;
 import java.nio.file.Files;
 
 import img2braille.*;
-import img2braille.providers.*;
+import img2braille.readers.*;
 
 public final class Test {
 	public static void main(String[] args) throws IOException {
-		final BitPackProvider provider1 = new BmpBitPackProvider("test1.bmp");
-		writeToFile(provider1, "test1.txt");
+		final BitPackReader reader1 = new BmpBitPackReader("test1.bmp");
+		writeToFile(reader1, "test1.txt");
 
-		final BitPackProvider provider2 = new BmpBitPackProvider("test2.bmp");
-		writeToFile(provider2, "test2.txt");
+		final BitPackReader reader2 = new BmpBitPackReader("test2.bmp");
+		writeToFile(reader2, "test2.txt");
 	}
 
-	private static void writeToFile(final BitPackProvider provider, final String filePath) throws IOException {
+	private static void writeToFile(final BitPackReader provider, final String filePath) throws IOException {
 		final File file = new File(filePath);
 
 		if (file.exists())

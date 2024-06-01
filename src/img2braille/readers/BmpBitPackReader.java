@@ -1,4 +1,4 @@
-package img2braille.providers;
+package img2braille.readers;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -12,12 +12,12 @@ import img2braille.*;
  * This class handles 1-bit color depth BMP images and implements interface to
  * write image's equivalent as text using Braille symbols.
  * 
- * @see img2braille.BitPackProvider
+ * @see img2braille.BitPackReader
  */
-public class BmpBitPackProvider implements BitPackProvider {
+public class BmpBitPackReader implements BitPackReader {
 	private final Stack<BitPackReadResult> stack;
 
-	public BmpBitPackProvider(final InputStream stream, final boolean closeStream) throws IOException {
+	public BmpBitPackReader(final InputStream stream, final boolean closeStream) throws IOException {
 		this.stack = new Stack<BitPackReadResult>();
 		this.init(stream);
 
@@ -25,15 +25,15 @@ public class BmpBitPackProvider implements BitPackProvider {
 			stream.close();
 	}
 
-	public BmpBitPackProvider(final InputStream stream) throws IOException {
+	public BmpBitPackReader(final InputStream stream) throws IOException {
 		this(stream, false);
 	}
 
-	public BmpBitPackProvider(final File file) throws IOException {
+	public BmpBitPackReader(final File file) throws IOException {
 		this(new FileInputStream(file), true);
 	}
 
-	public BmpBitPackProvider(final String filePath) throws IOException {
+	public BmpBitPackReader(final String filePath) throws IOException {
 		this(new File(filePath));
 	}
 
