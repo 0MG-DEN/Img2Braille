@@ -50,14 +50,10 @@ public class BmpBitPackReader implements BitPackReader {
 		// by 4 to get total number of bytes in a row.
 		int rowTotalBytes = ceil(width, 32) * 4;
 
-		byte[] emptyRow = new byte[rowTotalBytes];
-
 		// Ceiling of width divided by 8 to get number of used bytes in a row.
 		int rowUsedBytes = ceil(width, 8);
 
-		// Bytes are stored as is so need to reverse them using the buffer
-		// stack below to put them in the result stack in correct order.
-		Stack<BitPackReadResult> rowStack = new Stack<BitPackReadResult>();
+		byte[] emptyRow = new byte[rowTotalBytes];
 
 		skip(stream, arrayStart - 26); // Skip to array.
 		for (int currentRow = 1; currentRow <= height;) {
@@ -68,6 +64,10 @@ public class BmpBitPackReader implements BitPackReader {
 			part2 = ++currentRow <= height ? readPart(stream, rowTotalBytes) : emptyRow;
 			part1 = ++currentRow <= height ? readPart(stream, rowTotalBytes) : emptyRow;
 			++currentRow;
+
+			// Pixel bytes are stored as is so need to reverse them using the isnert
+			// index below to put them in the result stack in correct order.
+			int insertAt = stack.size();
 
 			// Each byte consists of 8 bits which we divide into 4 pairs
 			// on each line. Then we add bits of all first items in pairs
@@ -90,12 +90,9 @@ public class BmpBitPackReader implements BitPackReader {
 
 					// New line if we've read last bits of last byte in a row.
 					boolean newLine = (currentPair == 3) && (currentByte == rowUsedBytes - 1);
-					rowStack.push(new BitPackReadResult(new BitPack(shift), newLine));
+					stack.insertElementAt(new BitPackReadResult(new BitPack(shift), newLine), insertAt);
 				}
 			}
-
-			while (!rowStack.empty())
-				stack.push(rowStack.pop());
 		}
 
 		stack.trimToSize();
