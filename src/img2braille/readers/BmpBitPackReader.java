@@ -65,7 +65,7 @@ public class BmpBitPackReader implements BitPackReader {
 			part1 = ++currentRow <= height ? readPart(stream, rowTotalBytes) : emptyRow;
 			++currentRow;
 
-			// Pixel bytes are stored as is so need to reverse them using the isnert
+			// Pixel bytes are stored as is so need to reverse them using the insert
 			// index below to put them in the result stack in correct order.
 			int insertAt = stack.size();
 
