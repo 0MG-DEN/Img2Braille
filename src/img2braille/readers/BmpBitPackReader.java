@@ -77,7 +77,7 @@ public class BmpBitPackReader implements BitPackReader {
 					byte shift = 0;
 
 					// 1.......; ..1.....; ....1...; ......1.;
-					int mask1 = 1 << (7 - currentPair * 2);
+					int mask1 = 128 >> (currentPair * 2);
 					shift |= (part1[currentByte] & mask1) > 0 ? 0x01 : 0;
 					shift |= (part2[currentByte] & mask1) > 0 ? 0x02 : 0;
 					shift |= (part3[currentByte] & mask1) > 0 ? 0x04 : 0;
