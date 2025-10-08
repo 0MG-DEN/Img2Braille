@@ -3,6 +3,7 @@ package img2braille.test;
 import java.io.*;
 import java.net.*;
 import java.nio.file.*;
+import java.util.*;
 
 import org.junit.*;
 
@@ -43,7 +44,9 @@ public class BmpTests {
 		Assert.assertTrue(file.exists());
 
 		byte[] result = Files.readAllBytes(file.toPath()); // This will get bytes from newly created file.
-		byte[] expected = getBytes(txtFile); // This will get bytes from resource file with the same name.
+		byte[] expected;
+		expected = getBytes(txtFile); // This will get bytes from resource file with the same name.
+		expected = Arrays.copyOfRange(expected, 3, expected.length); // Remove BOM.
 		Assert.assertArrayEquals(expected, result);
 	}
 
@@ -55,5 +58,10 @@ public class BmpTests {
 	@Test
 	public void test2() throws Exception {
 		test("test2.bmp", "test2.txt");
+	}
+
+	@Test
+	public void test3() throws Exception {
+		test("test3.bmp", "test3.txt");
 	}
 }
